@@ -1,0 +1,34 @@
+package maven.demo3;
+
+import com.microsoft.cognitiveservices.speech.*;
+
+public class SpeechAzure {
+
+    public static void main(String[] args) {
+
+        String speechKey = "73SU9TS404gTVv8yZf53MvLqiQOjwVPP79umuOafJVHqJr5GbdU6JQQJ99CEACZoyfiXJ3w3AAAYACOGljgy";
+        String serviceRegion = "brazilsouth";
+
+        try {
+
+            SpeechConfig speechConfig = SpeechConfig.fromSubscription(speechKey, serviceRegion);
+
+            SpeechSynthesizer synthesizer = new SpeechSynthesizer(speechConfig);
+
+            String texto = "Olá, este é um teste do Azure Speech Service.";
+
+            SpeechSynthesisResult result = synthesizer.SpeakText(texto);
+
+            if (result.getReason() == ResultReason.SynthesizingAudioCompleted) {
+                System.out.println("Texto convertido em voz com sucesso.");
+            } else {
+                System.out.println("Erro na síntese.");
+            }
+
+            synthesizer.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
